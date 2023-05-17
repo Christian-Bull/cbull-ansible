@@ -1,0 +1,6 @@
+- name: Playbook to install Nginx
+  hosts: ip-10-0-0-50.ec2.internal
+  become: true
+
+  roles:
+    - nginx-deployment
