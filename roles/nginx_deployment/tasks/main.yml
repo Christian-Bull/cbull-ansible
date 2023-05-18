@@ -1,14 +1,21 @@
 # roles/k8s_deployment/tasks/main.yml
 
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+    cache_valid_time: 86400 #One day
+
 - name: Install Nginx
   become: true
   apt:
     name: nginx
-    state: present
+    state: latest
 
 - name: Start Nginx service
   become: true
   service:
     name: nginx
     state: started
-    enabled: true
+    enabled: yes
