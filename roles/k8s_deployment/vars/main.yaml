@@ -1,0 +1,7 @@
+# roles/k8s_deployment/vars/main.yml
+
+app_name: "{{ app_name }}"
+app_image: "{{ app_image }}"
+replicas: "{{ replicas | default(1) }}"
+kubeconfig_path: "{{ lookup('env', 'KUBECONFIG') }}"
+app_config: "{{ app_config | default('default config') }}"

@@ -1,0 +1,10 @@
+- name: Playbook to deploy k8s applications
+  tasks:
+    - include_role:
+        name: k8s_deployment
+      vars:
+        app_name: "app1"
+        app_image: "nginx"
+        replicas: 1
+        namespace: "cbull"
+        app_config: "hello"

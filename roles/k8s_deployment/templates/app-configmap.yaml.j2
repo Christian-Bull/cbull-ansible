@@ -1,0 +1,9 @@
+# roles/k8s_deployment/templates/app-configmap.yml.j2
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ app_name }}-config
+  namespace: {{ namespace }}
+data:
+  MY_APP_CONFIG: "{{ app_config }}"

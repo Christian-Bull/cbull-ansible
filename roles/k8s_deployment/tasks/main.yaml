@@ -1,0 +1,33 @@
+# roles/k8s_deployment/tasks/main.yml
+
+- name: Create ConfigMap
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'templates/app-configmap.yaml.j2') }}"
+    kubeconfig: "{{ kubeconfig_path }}"
+    namespace: "{{ namespace }}"
+  register: configmap_result
+
+- name: Deploy application
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'templates/app-deployment.yaml.j2') }}"
+    kubeconfig: "{{ kubeconfig_path }}"
+    namespace: "{{ namespace }}"
+  register: deployment_result
+
+- name: Create Service
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('template', 'templates/app-service.yaml.j2') }}"
+    kubeconfig: "{{ kubeconfig_path }}"
+    namespace: "{{ namespace }}"
+  register: service_result
+    
+- name: Assert that all tasks were successful
+  assert:
+    that:
+      - configmap_result.failed == false
+      - deployment_result.failed == false
+      - service_result.failed == false
+    fail_msg: "One or more tasks failed."
